@@ -37,12 +37,11 @@ dataColumns = pos.columns
 
 data = pos.select(dataColumns).unionAll(neg.select(dataColumns))
 
+#for IMS
 data.write.save((output_path + out_file),"com.databricks.spark.csv",header="true")
 
-
+#for datafactz
 df = sqlContext.range(0, numRowsReq).repartition(20)
-
 datafactz_df = df.select(rand().alias("Col1"), rand().alias("Col2"), rand().alias("Col3"))
-
 datafactz_df.write.save((output_path + out_datafactz),"com.databricks.spark.csv",header="true")
 

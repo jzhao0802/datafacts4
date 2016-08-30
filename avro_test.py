@@ -36,13 +36,11 @@ dataColumns = pos.columns
 
 data = pos.select(dataColumns).unionAll(neg.select(dataColumns))
 
+#for IMS
 data.write.format("com.databricks.spark.avro").save(output_path + out_file)
 
-
+#for datafactz
 df = sqlContext.range(0, numRowsReq).repartition(20)
-
 datafactz_df = df.select(rand().alias("Col1"), rand().alias("Col2"), rand().alias("Col3"))
-
-
 datafactz_df.write.format("com.databricks.spark.avro").save(output_path + out_datafactz)
 

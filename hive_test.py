@@ -34,11 +34,12 @@ neg = sqlContext.read.load((data_path + neg_file),
 dataColumns = pos.columns
 
 data = pos.select(dataColumns).unionAll(neg.select(dataColumns))
+
+#for IMS
 data.write.save(path= output_path + table_name, format='orc')
 
+#for datafactz
 df = sqlContext.range(0, numRowsReq).repartition(20)
-
 datafactz_df = df.select(rand().alias("Col1"), rand().alias("Col2"), rand().alias("Col3"))
-
 datafactz_df.write.save(path= output_path + datafactz_table_name, format='orc')
 
