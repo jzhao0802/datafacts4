@@ -41,7 +41,7 @@ data = pos.select(dataColumns).unionAll(neg.select(dataColumns))
 data.write.parquet(output_path + out_file)
 
 #for datafactz
-df = sqlContext.range(0, numRowsReq).repartition(20)
+df = sqlContext.range(0, numRowsReq)
 datafactz_df = df.select(rand().alias("Col1"), rand().alias("Col2"), rand().alias("Col3"))
 datafactz_df.write.parquet(output_path + out_datafactz)
 
